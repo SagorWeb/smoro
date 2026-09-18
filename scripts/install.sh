@@ -4,12 +4,12 @@
 # ═══════════════════════════════════════════════════════════════════════════════
 # Single universal command to install on any cloud VPS:
 #
-#   sudo bash -c 'curl -fsSL https://raw.githubusercontent.com/SagorWeb/sendmoro/main/scripts/install.sh | bash'
+#   sudo bash -c 'curl -fsSL https://raw.githubusercontent.com/SagorWeb/smoro/main/scripts/install.sh | bash'
 # ═══════════════════════════════════════════════════════════════════════════════
 
 set -euo pipefail
 
-REPO_RAW="https://raw.githubusercontent.com/SagorWeb/sendmoro/main"
+REPO_RAW="https://raw.githubusercontent.com/SagorWeb/smoro/main"
 SCRIPT_URL="${REPO_RAW}/scripts/install.sh"
 INSTALLER_PORT="8090"
 UNIVERSAL_CMD="sudo bash -c 'curl -fsSL ${SCRIPT_URL} | bash'"

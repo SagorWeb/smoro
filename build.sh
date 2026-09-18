@@ -90,15 +90,15 @@ cat <<EOF > "${BUILD_DIR}/release.json"
   "build_number": ${BUILD_NUMBER},
   "released_at": "${RELEASE_DATE}",
   "min_webmail_version": "${VERSION}",
-  "changelog": "https://github.com/SagorWeb/sendmoro/releases/tag/${VERSION}",
+  "changelog": "https://github.com/SagorWeb/smoro/releases/tag/${VERSION}",
   "mandatory": false,
   "download": {
     "linux_amd64": {
-      "url": "https://raw.githubusercontent.com/SagorWeb/sendmoro/main/build/sendmoro-linux-amd64.tar.gz",
+      "url": "https://raw.githubusercontent.com/SagorWeb/smoro/main/build/sendmoro-linux-amd64.tar.gz",
       "sha256": "${APP_SHA256}"
     },
     "installer_linux_amd64": {
-      "url": "https://raw.githubusercontent.com/SagorWeb/sendmoro/main/build/sendmoro-installer-linux-amd64.tar.gz",
+      "url": "https://raw.githubusercontent.com/SagorWeb/smoro/main/build/sendmoro-installer-linux-amd64.tar.gz",
       "sha256": "${INSTALLER_SHA256}"
     }
   },
