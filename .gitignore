@@ -1,0 +1,5 @@
+# Uncompressed binaries are duplicates of the .tar.gz archives.
+/build/sendmoro-linux-amd64
+/build/sendmoro-installer-linux-amd64
+.DS_Store
+*.DS_Store
