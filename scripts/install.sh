@@ -168,7 +168,7 @@ sleep 2
 
 echo ""
 echo "════════════════════════════════════════════════════════════════"
-echo "  Sendmoro web installer is running"
+echo "  Sendmoro installer is running"
 echo "════════════════════════════════════════════════════════════════"
 echo ""
 echo "  Open your browser to complete setup:"
