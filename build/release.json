@@ -12,11 +12,11 @@
     },
     "installer_linux_amd64": {
       "url": "https://raw.githubusercontent.com/SagorWeb/smoro/main/build/sendmoro-installer-linux-amd64.tar.gz",
-      "sha256": "be7c69af1ef052c7fd5efe1ad7c14cad8b38a583466383227c5f84e242483755"
+      "sha256": "c9aeb399c04ef66d5858a85dcc74b5dde65b883af880f719bda9c9a616917b4d"
     }
   },
   "sha256": {
     "sendmoro-linux-amd64.tar.gz": "71cf0b744fc6c3be6a1cd8c1a8767867f0fa4370bacef92528461c5f127b31b4",
-    "sendmoro-installer-linux-amd64.tar.gz": "be7c69af1ef052c7fd5efe1ad7c14cad8b38a583466383227c5f84e242483755"
+    "sendmoro-installer-linux-amd64.tar.gz": "c9aeb399c04ef66d5858a85dcc74b5dde65b883af880f719bda9c9a616917b4d"
   }
 }
