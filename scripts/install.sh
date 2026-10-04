@@ -127,8 +127,8 @@ if [ -z "$SERVER_IP" ]; then
   SERVER_IP="YOUR_SERVER_IP"
 fi
 
-INSTALLER_URL="${SENDMORO_INSTALLER_URL:-${REPO_RAW}/build/sendmoro-installer-linux-amd64.tar.gz}"
-MANIFEST_URL="${SENDMORO_MANIFEST_URL:-${REPO_RAW}/build/release.json}"
+INSTALLER_URL="${SENDMORO_INSTALLER_URL:-https://github.com/SagorWeb/smoro/releases/latest/download/sendmoro-installer-linux-amd64.tar.gz}"
+MANIFEST_URL="${SENDMORO_MANIFEST_URL:-https://github.com/SagorWeb/smoro/releases/latest/download/release.json}"
 
 WORKDIR=/tmp/sendmoro-install-tmp
 rm -rf "$WORKDIR"
@@ -136,11 +136,16 @@ mkdir -p "$WORKDIR"
 
 echo ">>> Fetching Sendmoro web installer..."
 if ! curl -fsSL "$INSTALLER_URL" -o "$WORKDIR/installer.tar.gz"; then
-  echo "Error: Failed to download installer from $INSTALLER_URL"
-  exit 1
+  echo ">>> Primary release download unavailable, trying repository fallback..."
+  if ! curl -fsSL "${REPO_RAW}/build/sendmoro-installer-linux-amd64.tar.gz" -o "$WORKDIR/installer.tar.gz"; then
+    echo "Error: Failed to download installer from $INSTALLER_URL and fallback."
+    exit 1
+  fi
 fi
 
-if curl -fsSL "$MANIFEST_URL" -o "$WORKDIR/release.json" 2>/dev/null; then
+if ! curl -fsSL "$MANIFEST_URL" -o "$WORKDIR/release.json" 2>/dev/null; then
+  curl -fsSL "${REPO_RAW}/build/release.json" -o "$WORKDIR/release.json" 2>/dev/null || true
+fi
   EXPECTED=$(sed -n '/installer_linux_amd64/,/sha256/s/.*"sha256": *"\([^"]*\)".*/\1/p' "$WORKDIR/release.json" | head -1)
   GOT=$(sha256sum "$WORKDIR/installer.tar.gz" 2>/dev/null | awk '{print $1}' || echo "")
   if [ -n "$EXPECTED" ] && [ -n "$GOT" ] && [ "$EXPECTED" != "$GOT" ]; then
