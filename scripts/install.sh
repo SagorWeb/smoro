@@ -146,6 +146,8 @@ fi
 if ! curl -fsSL "$MANIFEST_URL" -o "$WORKDIR/release.json" 2>/dev/null; then
   curl -fsSL "${REPO_RAW}/build/release.json" -o "$WORKDIR/release.json" 2>/dev/null || true
 fi
+
+if [ -f "$WORKDIR/release.json" ]; then
   EXPECTED=$(sed -n '/installer_linux_amd64/,/sha256/s/.*"sha256": *"\([^"]*\)".*/\1/p' "$WORKDIR/release.json" | head -1)
   GOT=$(sha256sum "$WORKDIR/installer.tar.gz" 2>/dev/null | awk '{print $1}' || echo "")
   if [ -n "$EXPECTED" ] && [ -n "$GOT" ] && [ "$EXPECTED" != "$GOT" ]; then
