@@ -1,5 +1,6 @@
-# Uncompressed binaries are duplicates of the .tar.gz archives.
+# Binaries and archives ship as GitHub Release assets, not git files.
 /build/sendmoro-linux-amd64
 /build/sendmoro-installer-linux-amd64
+/build/*.tar.gz
 .DS_Store
 *.DS_Store
