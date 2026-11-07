@@ -1,8 +1,15 @@
 #!/bin/bash
-# Sendmoro server bootstrap: downloads the checksum-verified web installer and
-# starts it. Run on a fresh Ubuntu 26.04 LTS (x86_64) server:
+# Sendmoro server bootstrap: downloads the checksum-verified installer and
+# either starts the web wizard on port 8090 or runs a full unattended setup.
 #
-#   sudo bash -c 'curl -fsSL https://raw.githubusercontent.com/SagorWeb/smoro/main/scripts/install.sh | bash'
+# Mode 1 — Interactive Browser Setup Wizard:
+#   curl -fsSL https://raw.githubusercontent.com/SagorWeb/smoro/main/scripts/install.sh | sudo bash
+#
+# Mode 2 — One-Line Automated / Marketplace Setup:
+#   curl -fsSL https://raw.githubusercontent.com/SagorWeb/smoro/main/scripts/install.sh | sudo bash -s -- \
+#     --hostname mail.yourdomain.com \
+#     --email admin@yourdomain.com \
+#     --password 'YourStrongPassword123!'
 #
 # All work happens inside main(), so a partly downloaded script runs nothing.
 
@@ -14,8 +21,11 @@ readonly ASSET="sendmoro-installer-linux-amd64"
 readonly UNIT="sendmoro-installer"
 readonly BIN="/usr/local/sbin/sendmoro-installer"
 readonly PORT="8090"
-readonly INSTALL_CMD="sudo bash -c 'curl -fsSL ${SCRIPT_URL} | bash'"
+readonly INSTALL_CMD="curl -fsSL ${SCRIPT_URL} | sudo bash"
 TMP_DIR=""
+AUTO_HOSTNAME="${SENDMORO_HOSTNAME:-}"
+AUTO_EMAIL="${ADMIN_EMAIL:-}"
+AUTO_PASSWORD="${ADMIN_PASSWORD:-}"
 
 fail() {
   printf '\nSendmoro cannot install on this server.\n  %s\n\nInstall command:\n  %s\n' "$1" "$INSTALL_CMD" >&2
@@ -27,20 +37,67 @@ fetch() {
     --connect-timeout 15 --max-time 300 -o "$2" "$1"
 }
 
+parse_args() {
+  while [ $# -gt 0 ]; do
+    case "$1" in
+      --as-root)
+        shift
+        ;;
+      --hostname|-h)
+        [ $# -ge 2 ] || fail "Missing value for $1 (e.g. --hostname mail.yourdomain.com)"
+        AUTO_HOSTNAME="$2"
+        shift 2
+        ;;
+      --hostname=*)
+        AUTO_HOSTNAME="${1#*=}"
+        shift
+        ;;
+      --email|--admin-email|-e)
+        [ $# -ge 2 ] || fail "Missing value for $1 (e.g. --email admin@yourdomain.com)"
+        AUTO_EMAIL="$2"
+        shift 2
+        ;;
+      --email=*|--admin-email=*)
+        AUTO_EMAIL="${1#*=}"
+        shift
+        ;;
+      --password|--admin-password|-p)
+        [ $# -ge 2 ] || fail "Missing value for $1 (e.g. --password 'YourStrongPassword')"
+        AUTO_PASSWORD="$2"
+        shift 2
+        ;;
+      --password=*|--admin-password=*)
+        AUTO_PASSWORD="${1#*=}"
+        shift
+        ;;
+      *)
+        fail "Unknown argument: $1"
+        ;;
+    esac
+  done
+
+  if [ -n "$AUTO_HOSTNAME" ] || [ -n "$AUTO_EMAIL" ] || [ -n "$AUTO_PASSWORD" ]; then
+    if [ -z "$AUTO_HOSTNAME" ] || [ -z "$AUTO_EMAIL" ] || [ -z "$AUTO_PASSWORD" ]; then
+      fail "For one-line automated setup, provide all three: --hostname <fqdn> --email <admin-email> --password <password>"
+    fi
+  fi
+}
+
 become_root() {
   if [ "$(id -u)" -eq 0 ]; then
     return
   fi
-  if [ "${1:-}" = "--as-root" ]; then
-    fail "sudo ran, but this account is still not root (UID 0)."
-  fi
+  for arg in "$@"; do
+    if [ "$arg" = "--as-root" ]; then
+      fail "sudo ran, but this account is still not root (UID 0)."
+    fi
+  done
   if command -v sudo >/dev/null 2>&1 && sudo -n true 2>/dev/null; then
-    exec sudo bash -c "curl --proto =https -fsSL '${SCRIPT_URL}' | bash -s -- --as-root"
+    exec sudo -E bash -c 'curl --proto =https -fsSL "$1" | bash -s -- --as-root "${@:2}"' _ "$SCRIPT_URL" "$@"
   fi
   fail "Root access is required. Run the install command below as root or with sudo."
 }
 
-# The installer prints its link, with a one-time key, when it starts.
 print_url() {
   local run url
   run=$(systemctl show -p InvocationID --value "$UNIT" 2>/dev/null) || true
@@ -49,20 +106,72 @@ print_url() {
     sed -n 's/.*Open: \(http[^ ]*\).*/\1/p' | tail -n 1) || true
   [ -n "$url" ] || return 1
   printf '\nThe Sendmoro installer is running. Open this link in your browser:\n\n    %s\n\n' "$url"
-  echo "The link includes a one-time key, so keep it private."
   echo "If the page does not load, allow TCP port ${PORT} in your hosting provider's firewall."
+}
+
+run_unattended_install() {
+  echo ">>> Starting unattended Sendmoro setup for ${AUTO_HOSTNAME} (${AUTO_EMAIL})..."
+  local resp http_code body
+  resp=$(curl -sS -w $'\n%{http_code}' -X POST "http://127.0.0.1:${PORT}/api/install" \
+    --data-urlencode "hostname=${AUTO_HOSTNAME}" \
+    --data-urlencode "admin_email=${AUTO_EMAIL}" \
+    --data-urlencode "admin_password=${AUTO_PASSWORD}") || fail "Could not reach local installer on port ${PORT}."
+
+  http_code=$(printf '%s\n' "$resp" | tail -n 1)
+  body=$(printf '%s\n' "$resp" | sed '$d')
+  if [ "$http_code" != "200" ]; then
+    fail "Installer rejected configuration (HTTP ${http_code}): ${body}"
+  fi
+
+  local last_msg="" state status pct title log_line ssl_ready proto
+  while true; do
+    state=$(curl -fsS "http://127.0.0.1:${PORT}/api/status") || fail "Lost connection to local installer."
+    status=$(printf '%s\n' "$state" | grep -o '"status":"[^"]*"' | head -n 1 | cut -d'"' -f4)
+    pct=$(printf '%s\n' "$state" | grep -o '"percent":[0-9]*' | head -n 1 | cut -d: -f2)
+    title=$(printf '%s\n' "$state" | grep -o '"title":"[^"]*"' | head -n 1 | cut -d'"' -f4)
+    log_line=$(printf '%s\n' "$state" | grep -o '"log":"[^"]*"' | head -n 1 | cut -d'"' -f4)
+
+    if [ -n "$log_line" ] && [ "${pct}:${log_line}" != "$last_msg" ]; then
+      printf '[%3s%%] %s — %s\n' "${pct:-0}" "$title" "$log_line"
+      last_msg="${pct}:${log_line}"
+    fi
+
+    if [ "$status" = "complete" ]; then
+      ssl_ready=$(printf '%s\n' "$state" | grep -o '"ssl_ready":[a-z]*' | head -n 1 | cut -d: -f2)
+      curl -fsS -X POST "http://127.0.0.1:${PORT}/api/delete" >/dev/null 2>&1 || true
+      proto="https://"
+      [ "$ssl_ready" = "true" ] || proto="http://"
+      printf '\n✓ Sendmoro installation 100%% complete!\n'
+      printf '  Webmail URL:     %s%s\n' "$proto" "$AUTO_HOSTNAME"
+      printf '  Admin Dashboard: %s%s/admin\n' "$proto" "$AUTO_HOSTNAME"
+      printf '  Admin Email:     %s\n\n' "$AUTO_EMAIL"
+      return 0
+    fi
+
+    if [ "$status" = "error" ]; then
+      fail "Provisioning failed at ${title}: ${log_line}"
+    fi
+
+    sleep 2
+  done
 }
 
 main() {
   become_root "$@"
+  parse_args "$@"
 
   [ "$(uname -m)" = "x86_64" ] || fail "Unsupported CPU ($(uname -m)). Sendmoro needs an x86_64 server."
   [ "$(ps -p 1 -o comm= 2>/dev/null)" = "systemd" ] || fail "systemd is not PID 1. Use a normal VPS or dedicated server."
   if [ -e /opt/webmail/bin/webmail-api ] || [ -e /etc/systemd/system/sendmoro-api.service ]; then
     fail "Sendmoro is already installed on this server."
   fi
+
   if systemctl is-active --quiet "$UNIT"; then
-    print_url || echo "The Sendmoro installer is already running. Show its link with: journalctl -u ${UNIT} -o cat | grep Open"
+    if [ -n "$AUTO_HOSTNAME" ]; then
+      run_unattended_install
+      return
+    fi
+    print_url || echo "The Sendmoro installer is already running at http://$(hostname -I | awk '{print $1}'):${PORT}"
     return
   fi
 
@@ -100,8 +209,14 @@ main() {
 
   local _
   for _ in $(seq 30); do
-    if curl -fs -o /dev/null --max-time 2 "http://127.0.0.1:${PORT}/" && print_url; then
-      return
+    if curl -fs -o /dev/null --max-time 2 "http://127.0.0.1:${PORT}/"; then
+      if [ -n "$AUTO_HOSTNAME" ]; then
+        run_unattended_install
+        return
+      fi
+      if print_url; then
+        return
+      fi
     fi
     systemctl is-active --quiet "$UNIT" || break
     sleep 1
