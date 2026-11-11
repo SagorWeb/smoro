@@ -20,6 +20,7 @@ readonly RELEASES="https://github.com/SagorWeb/smoro/releases"
 readonly ASSET="sendmoro-installer-linux-amd64"
 readonly UNIT="sendmoro-installer"
 readonly BIN="/usr/local/sbin/sendmoro-installer"
+readonly TOKEN_FILE="/opt/webmail/.install_token"
 readonly PORT="8090"
 readonly INSTALL_CMD="curl -fsSL ${SCRIPT_URL} | sudo bash"
 TMP_DIR=""
@@ -103,19 +104,39 @@ print_url() {
   run=$(systemctl show -p InvocationID --value "$UNIT" 2>/dev/null) || true
   [ -n "$run" ] || return 1
   url=$(journalctl _SYSTEMD_INVOCATION_ID="$run" -o cat --no-pager 2>/dev/null |
-    sed -n 's/.*Open: \(http[^ ]*\).*/\1/p' | tail -n 1) || true
+    sed -n 's/.*Open: \(https\{0,1\}:\/\/[^ ]*\).*/\1/p' | tail -n 1) || true
   [ -n "$url" ] || return 1
-  printf '\nThe Sendmoro installer is running. Open this link in your browser:\n\n    %s\n\n' "$url"
+  printf '\nThe Sendmoro installer is running (protected with TLS & one-time setup token).\nOpen this link in your browser:\n\n    %s\n\n' "$url"
+  echo "Note: Accept the temporary self-signed setup certificate warning in your browser."
   echo "If the page does not load, allow TCP port ${PORT} in your hosting provider's firewall."
+}
+
+installer_token() {
+  tr -d ' \r\n' < "$TOKEN_FILE" 2>/dev/null || true
 }
 
 run_unattended_install() {
   echo ">>> Starting unattended Sendmoro setup for ${AUTO_HOSTNAME} (${AUTO_EMAIL})..."
-  local resp http_code body
-  resp=$(curl -sS -w $'\n%{http_code}' -X POST "http://127.0.0.1:${PORT}/api/install" \
-    --data-urlencode "hostname=${AUTO_HOSTNAME}" \
-    --data-urlencode "admin_email=${AUTO_EMAIL}" \
-    --data-urlencode "admin_password=${AUTO_PASSWORD}") || fail "Could not reach local installer on port ${PORT}."
+  local resp http_code body tok payload_file
+  tok="$(installer_token)"
+  [ -n "$tok" ] || fail "Installer setup token is missing at ${TOKEN_FILE}."
+
+  payload_file="$(mktemp "${TMP_DIR:-/tmp}/sendmoro-install-XXXXXX")"
+  chmod 0600 "$payload_file"
+  python3 -c 'import json,sys; print(json.dumps({"hostname":sys.argv[1],"admin_email":sys.argv[2],"admin_password":sys.argv[3]}))' \
+    "$AUTO_HOSTNAME" "$AUTO_EMAIL" "$AUTO_PASSWORD" > "$payload_file" 2>/dev/null || {
+    local esc_host esc_email esc_pass
+    esc_host=$(printf '%s' "$AUTO_HOSTNAME" | sed 's/\\/\\\\/g; s/"/\\"/g')
+    esc_email=$(printf '%s' "$AUTO_EMAIL" | sed 's/\\/\\\\/g; s/"/\\"/g')
+    esc_pass=$(printf '%s' "$AUTO_PASSWORD" | sed 's/\\/\\\\/g; s/"/\\"/g')
+    printf '{"hostname":"%s","admin_email":"%s","admin_password":"%s"}\n' "$esc_host" "$esc_email" "$esc_pass" > "$payload_file"
+  }
+
+  resp=$(curl -skS -w $'\n%{http_code}' -X POST "https://127.0.0.1:${PORT}/api/install" \
+    -H "Content-Type: application/json" \
+    -H "X-Setup-Token: ${tok}" \
+    --data-binary @"$payload_file") || { rm -f "$payload_file"; fail "Could not reach local installer on port ${PORT}."; }
+  rm -f "$payload_file"
 
   http_code=$(printf '%s\n' "$resp" | tail -n 1)
   body=$(printf '%s\n' "$resp" | sed '$d')
@@ -125,7 +146,7 @@ run_unattended_install() {
 
   local last_msg="" state status pct title log_line ssl_ready proto
   while true; do
-    state=$(curl -fsS "http://127.0.0.1:${PORT}/api/status") || fail "Lost connection to local installer."
+    state=$(curl -fskS -H "X-Setup-Token: ${tok}" "https://127.0.0.1:${PORT}/api/status") || fail "Lost connection to local installer."
     status=$(printf '%s\n' "$state" | grep -o '"status":"[^"]*"' | head -n 1 | cut -d'"' -f4)
     pct=$(printf '%s\n' "$state" | grep -o '"percent":[0-9]*' | head -n 1 | cut -d: -f2)
     title=$(printf '%s\n' "$state" | grep -o '"title":"[^"]*"' | head -n 1 | cut -d'"' -f4)
@@ -138,7 +159,7 @@ run_unattended_install() {
 
     if [ "$status" = "complete" ]; then
       ssl_ready=$(printf '%s\n' "$state" | grep -o '"ssl_ready":[a-z]*' | head -n 1 | cut -d: -f2)
-      curl -fsS -X POST "http://127.0.0.1:${PORT}/api/delete" >/dev/null 2>&1 || true
+      curl -fskS -X POST -H "X-Setup-Token: ${tok}" "https://127.0.0.1:${PORT}/api/delete" >/dev/null 2>&1 || true
       proto="https://"
       [ "$ssl_ready" = "true" ] || proto="http://"
       printf '\n✓ Sendmoro installation 100%% complete!\n'
@@ -171,7 +192,7 @@ main() {
       run_unattended_install
       return
     fi
-    print_url || echo "The Sendmoro installer is already running at http://$(hostname -I | awk '{print $1}'):${PORT}"
+    print_url || echo "The Sendmoro installer is already running at https://$(hostname -I | awk '{print $1}'):${PORT}/?token=$(installer_token)"
     return
   fi
 
@@ -194,22 +215,27 @@ main() {
   install -m 0755 "$TMP_DIR/$ASSET" "$BIN"
 
   # The installer opens every port when it enables UFW at the end. If UFW is
-  # already on, open the installer page and the Let's Encrypt check now.
+  # already on, open port 80 (for Let's Encrypt) and port 8090 only in interactive mode.
   if command -v ufw >/dev/null 2>&1 && ufw status 2>/dev/null | grep -q '^Status: active'; then
-    local p
-    for p in "$PORT" 80; do
-      ufw allow "${p}/tcp" >/dev/null || fail "Could not open port ${p} in UFW."
-    done
+    ufw allow 80/tcp >/dev/null || fail "Could not open port 80 in UFW."
+    if [ -z "$AUTO_HOSTNAME" ]; then
+      ufw allow "${PORT}/tcp" >/dev/null || fail "Could not open port ${PORT} in UFW."
+    fi
   fi
 
-  local since
+  local since bind_env=""
   since=$(date +%s)
-  systemd-run --quiet --collect --unit="$UNIT" --setenv=HOME=/root "$BIN" ||
+  if [ -n "$AUTO_HOSTNAME" ]; then
+    bind_env="--setenv=BIND_ADDR=127.0.0.1"
+  fi
+  # shellcheck disable=SC2086
+  systemd-run --quiet --collect --unit="$UNIT" --setenv=HOME=/root $bind_env "$BIN" ||
     fail "Could not start the installer service."
 
-  local _
+  local _ tok
   for _ in $(seq 30); do
-    if curl -fs -o /dev/null --max-time 2 "http://127.0.0.1:${PORT}/"; then
+    tok="$(installer_token)"
+    if [ -n "$tok" ] && curl -fsk -o /dev/null --max-time 2 -H "X-Setup-Token: ${tok}" "https://127.0.0.1:${PORT}/"; then
       if [ -n "$AUTO_HOSTNAME" ]; then
         run_unattended_install
         return
