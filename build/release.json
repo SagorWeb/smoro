@@ -1,23 +1,23 @@
 {
   "version": "v1.0.0",
-  "build_number": 10266,
-  "released_at": "2026-11-13T02:05:14Z",
+  "build_number": 10267,
+  "released_at": "2026-11-13T04:21:54Z",
   "min_webmail_version": "v1.0.0",
-  "changelog": "https://github.com/SagorWeb/smoro/releases/tag/v1.0.0-10266",
+  "changelog": "https://github.com/SagorWeb/smoro/releases/tag/v1.0.0-10267",
   "mandatory": false,
   "download": {
     "linux_amd64": {
-      "url": "https://github.com/SagorWeb/smoro/releases/download/v1.0.0-10266/sendmoro-linux-amd64.tar.gz",
-      "sha256": "248f0f26e78e3ee1cbf5cebcde8597a02e637430883e2110ff8026cca5d44922",
+      "url": "https://github.com/SagorWeb/smoro/releases/download/v1.0.0-10267/sendmoro-linux-amd64.tar.gz",
+      "sha256": "b87e7f90633ad8707399c4cb15d5a2c281ae1ad4c64ebf4787ec09f36a020095",
       "signature": ""
     },
     "installer_linux_amd64": {
-      "url": "https://github.com/SagorWeb/smoro/releases/download/v1.0.0-10266/sendmoro-installer-linux-amd64.tar.gz",
-      "sha256": "4a2fc661f9dca29718872c0b8002f5f383677f7348143a2bb872bb2207e4c04d"
+      "url": "https://github.com/SagorWeb/smoro/releases/download/v1.0.0-10267/sendmoro-installer-linux-amd64.tar.gz",
+      "sha256": "5a56d36464a97fae3f1ba9f208be6e253aaba1b101d780a7986597f4727edc32"
     }
   },
   "sha256": {
-    "sendmoro-linux-amd64.tar.gz": "248f0f26e78e3ee1cbf5cebcde8597a02e637430883e2110ff8026cca5d44922",
-    "sendmoro-installer-linux-amd64.tar.gz": "4a2fc661f9dca29718872c0b8002f5f383677f7348143a2bb872bb2207e4c04d"
+    "sendmoro-linux-amd64.tar.gz": "b87e7f90633ad8707399c4cb15d5a2c281ae1ad4c64ebf4787ec09f36a020095",
+    "sendmoro-installer-linux-amd64.tar.gz": "5a56d36464a97fae3f1ba9f208be6e253aaba1b101d780a7986597f4727edc32"
   }
 }
