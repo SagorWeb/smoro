@@ -1,24 +1,24 @@
 {
   "version": "v1.0.0",
-  "build_number": 10291,
-  "released_at": "2026-11-22T07:55:17Z",
+  "build_number": 10292,
+  "released_at": "2026-11-22T08:41:13Z",
   "min_webmail_version": "v1.0.0",
-  "changelog": "https://github.com/SagorWeb/smoro/releases/tag/v1.0.0-10291",
+  "changelog": "https://github.com/SagorWeb/smoro/releases/tag/v1.0.0-10292",
   "mandatory": false,
   "clear_cache": true,
   "download": {
     "linux_amd64": {
-      "url": "https://github.com/SagorWeb/smoro/releases/download/v1.0.0-10291/sendmoro-linux-amd64.tar.gz",
-      "sha256": "8a543d52a1947d8946fcfd48c69cb210a1c0a5dc0aac8bf4b73ca4c8f8eea42a",
-      "signature": "6d129741960e7ec6ff75e90cf9bb38ce1c954de597fb0915294bd943dfc2177cb58f4e0fd0e593ead6145cb9d58759fc45a98c4309d4179d85b8fa88cd24e701"
+      "url": "https://github.com/SagorWeb/smoro/releases/download/v1.0.0-10292/sendmoro-linux-amd64.tar.gz",
+      "sha256": "b0b4566ec2cf8979f75441dccdc7168813f22e21caca5a0961472df330203378",
+      "signature": "13d094e1afc57059caf4d1d12ac5144f385671546ca6f4928eb9ea21c24f221f1dc299639d59e23cb00d79446acf970bda991a7dffbc3df56a7fc8140f84ec0d"
     },
     "installer_linux_amd64": {
-      "url": "https://github.com/SagorWeb/smoro/releases/download/v1.0.0-10291/sendmoro-installer-linux-amd64.tar.gz",
-      "sha256": "770fc68af2e3777bc4ab9b40e0ab2ac2e874c779afb11bb678133eeb0e59b9eb"
+      "url": "https://github.com/SagorWeb/smoro/releases/download/v1.0.0-10292/sendmoro-installer-linux-amd64.tar.gz",
+      "sha256": "630d12f4c74581731a3c4da574544b3ca605c9e2c51dd660691122277e68b3aa"
     }
   },
   "sha256": {
-    "sendmoro-linux-amd64.tar.gz": "8a543d52a1947d8946fcfd48c69cb210a1c0a5dc0aac8bf4b73ca4c8f8eea42a",
-    "sendmoro-installer-linux-amd64.tar.gz": "770fc68af2e3777bc4ab9b40e0ab2ac2e874c779afb11bb678133eeb0e59b9eb"
+    "sendmoro-linux-amd64.tar.gz": "b0b4566ec2cf8979f75441dccdc7168813f22e21caca5a0961472df330203378",
+    "sendmoro-installer-linux-amd64.tar.gz": "630d12f4c74581731a3c4da574544b3ca605c9e2c51dd660691122277e68b3aa"
   }
 }
