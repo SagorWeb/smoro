@@ -1,24 +1,24 @@
 {
   "version": "v1.0.0",
-  "build_number": 10294,
-  "released_at": "2026-11-22T14:50:44Z",
+  "build_number": 10295,
+  "released_at": "2026-11-22T22:54:06Z",
   "min_webmail_version": "v1.0.0",
-  "changelog": "https://github.com/SagorWeb/smoro/releases/tag/v1.0.0-10294",
+  "changelog": "https://github.com/SagorWeb/smoro/releases/tag/v1.0.0-10295",
   "mandatory": false,
   "clear_cache": true,
   "download": {
     "linux_amd64": {
-      "url": "https://github.com/SagorWeb/smoro/releases/download/v1.0.0-10294/sendmoro-linux-amd64.tar.gz",
-      "sha256": "0b9a5e552c7127e0ceadb938df2e130672d1a8c383960920f2ea3e65d2fd5396",
-      "signature": "804d473f4c6d58c8e6cb713ff5a4fdc1b074144558f4830b9c2feff6db1203a5cb021199819cc1d73e2e77c78aac0582eada6f9d13ad07be9238c082c8364f08"
+      "url": "https://github.com/SagorWeb/smoro/releases/download/v1.0.0-10295/sendmoro-linux-amd64.tar.gz",
+      "sha256": "453596db97c5124a655a45a8e9e8c13156e6dc85e0aeee88877ab202aae0bbbc",
+      "signature": "87c26991c4b520a013a91708fdc692ffd2a0b6cfce945510a0804def401326458b1356bcbf9dd932d8a7ff485a654e819491f6e4d3e72dd8ff0a96342d16b204"
     },
     "installer_linux_amd64": {
-      "url": "https://github.com/SagorWeb/smoro/releases/download/v1.0.0-10294/sendmoro-installer-linux-amd64.tar.gz",
-      "sha256": "b634e9c235a7828ee79842ee42a2a82a1a354892a89bfb40c4a9c888c8f9b074"
+      "url": "https://github.com/SagorWeb/smoro/releases/download/v1.0.0-10295/sendmoro-installer-linux-amd64.tar.gz",
+      "sha256": "f1c86d5439c456402c2b369b48e1adde8fdcc93adea744a5c7a785fa81edfdc5"
     }
   },
   "sha256": {
-    "sendmoro-linux-amd64.tar.gz": "0b9a5e552c7127e0ceadb938df2e130672d1a8c383960920f2ea3e65d2fd5396",
-    "sendmoro-installer-linux-amd64.tar.gz": "b634e9c235a7828ee79842ee42a2a82a1a354892a89bfb40c4a9c888c8f9b074"
+    "sendmoro-linux-amd64.tar.gz": "453596db97c5124a655a45a8e9e8c13156e6dc85e0aeee88877ab202aae0bbbc",
+    "sendmoro-installer-linux-amd64.tar.gz": "f1c86d5439c456402c2b369b48e1adde8fdcc93adea744a5c7a785fa81edfdc5"
   }
 }
