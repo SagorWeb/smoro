@@ -1,24 +1,24 @@
 {
   "version": "v1.0.0",
-  "build_number": 10292,
-  "released_at": "2026-11-22T08:41:13Z",
+  "build_number": 10293,
+  "released_at": "2026-11-22T13:06:54Z",
   "min_webmail_version": "v1.0.0",
-  "changelog": "https://github.com/SagorWeb/smoro/releases/tag/v1.0.0-10292",
+  "changelog": "https://github.com/SagorWeb/smoro/releases/tag/v1.0.0-10293",
   "mandatory": false,
   "clear_cache": true,
   "download": {
     "linux_amd64": {
-      "url": "https://github.com/SagorWeb/smoro/releases/download/v1.0.0-10292/sendmoro-linux-amd64.tar.gz",
-      "sha256": "b0b4566ec2cf8979f75441dccdc7168813f22e21caca5a0961472df330203378",
-      "signature": "13d094e1afc57059caf4d1d12ac5144f385671546ca6f4928eb9ea21c24f221f1dc299639d59e23cb00d79446acf970bda991a7dffbc3df56a7fc8140f84ec0d"
+      "url": "https://github.com/SagorWeb/smoro/releases/download/v1.0.0-10293/sendmoro-linux-amd64.tar.gz",
+      "sha256": "e8e142d377e2bd0e1f2361add58a402a3eb7c57c42233d59af6bb8127654505c",
+      "signature": "b5884cb223f155d26fdc102b44f1df76813f1c2f2f6971dc2d71c88951c53bedb6aaea13361b77622867d0b3fe9bf9121822862822fb7571be20034eff72e204"
     },
     "installer_linux_amd64": {
-      "url": "https://github.com/SagorWeb/smoro/releases/download/v1.0.0-10292/sendmoro-installer-linux-amd64.tar.gz",
-      "sha256": "630d12f4c74581731a3c4da574544b3ca605c9e2c51dd660691122277e68b3aa"
+      "url": "https://github.com/SagorWeb/smoro/releases/download/v1.0.0-10293/sendmoro-installer-linux-amd64.tar.gz",
+      "sha256": "72f570b4013c219a656d1197df6b0c2d0b50d104c06137e39404c0dbc835481d"
     }
   },
   "sha256": {
-    "sendmoro-linux-amd64.tar.gz": "b0b4566ec2cf8979f75441dccdc7168813f22e21caca5a0961472df330203378",
-    "sendmoro-installer-linux-amd64.tar.gz": "630d12f4c74581731a3c4da574544b3ca605c9e2c51dd660691122277e68b3aa"
+    "sendmoro-linux-amd64.tar.gz": "e8e142d377e2bd0e1f2361add58a402a3eb7c57c42233d59af6bb8127654505c",
+    "sendmoro-installer-linux-amd64.tar.gz": "72f570b4013c219a656d1197df6b0c2d0b50d104c06137e39404c0dbc835481d"
   }
 }
