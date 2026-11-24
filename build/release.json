@@ -1,24 +1,24 @@
 {
   "version": "v1.0.0",
-  "build_number": 10299,
-  "released_at": "2026-11-24T02:40:51Z",
+  "build_number": 10300,
+  "released_at": "2026-11-24T04:23:59Z",
   "min_webmail_version": "v1.0.0",
-  "changelog": "https://github.com/SagorWeb/smoro/releases/tag/v1.0.0-10299",
+  "changelog": "https://github.com/SagorWeb/smoro/releases/tag/v1.0.0-10300",
   "mandatory": false,
   "clear_cache": false,
   "download": {
     "linux_amd64": {
-      "url": "https://github.com/SagorWeb/smoro/releases/download/v1.0.0-10299/sendmoro-linux-amd64.tar.gz",
-      "sha256": "f95907b2e370ba71822d9a99c6dc0946a16cb8a5345cf69269300316feb3bd2d",
-      "signature": "7ac4c794d2038b32b589934bb730f16f47ac295bb5e4719883e5b4cecc6e6153345011c52cc3e7117e9777ff9dd8f15726aab223d11697bd79f3ae38d351d60a"
+      "url": "https://github.com/SagorWeb/smoro/releases/download/v1.0.0-10300/sendmoro-linux-amd64.tar.gz",
+      "sha256": "89d3aa161fe65915887b6b26edd939f56d9ed13752a463a7c92b40f4e36a2a63",
+      "signature": "0ad2e17da053938f75c5ce123978b1d72e198bec0c186bf18fbdfe9deed0f6353368ff61a1db91039e9be4bfcee5cc653d49591a38cfd4217b93b796cc641705"
     },
     "installer_linux_amd64": {
-      "url": "https://github.com/SagorWeb/smoro/releases/download/v1.0.0-10299/sendmoro-installer-linux-amd64.tar.gz",
-      "sha256": "6d1c44d4cc6af9eb23749a9ee5e3bf4bd70d14f7d03936f99fa3af97a08ac29a"
+      "url": "https://github.com/SagorWeb/smoro/releases/download/v1.0.0-10300/sendmoro-installer-linux-amd64.tar.gz",
+      "sha256": "7f4c4b178e481f4391036a0d42f061caa2739d9d8e25ad24fda2caa495d10709"
     }
   },
   "sha256": {
-    "sendmoro-linux-amd64.tar.gz": "f95907b2e370ba71822d9a99c6dc0946a16cb8a5345cf69269300316feb3bd2d",
-    "sendmoro-installer-linux-amd64.tar.gz": "6d1c44d4cc6af9eb23749a9ee5e3bf4bd70d14f7d03936f99fa3af97a08ac29a"
+    "sendmoro-linux-amd64.tar.gz": "89d3aa161fe65915887b6b26edd939f56d9ed13752a463a7c92b40f4e36a2a63",
+    "sendmoro-installer-linux-amd64.tar.gz": "7f4c4b178e481f4391036a0d42f061caa2739d9d8e25ad24fda2caa495d10709"
   }
 }

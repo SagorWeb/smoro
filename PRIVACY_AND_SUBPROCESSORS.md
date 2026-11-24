@@ -22,7 +22,7 @@ The organization or individual deploying Sendmoro is the sole **Data Controller*
 ### 2.2 External / Remote AI Providers — *Disabled by Default (Admin Opt-In)*
 - **Default Behavior (Local AI):** Disabled by default. In **Local mode** (self-hosted Ollama on `127.0.0.1:11434`), no email text or prompts leave the Operator's server.
 - **Remote AI Mode (`ai.remote_enabled = true`):** If an administrator configures a third-party AI API (e.g., OpenAI, Google Gemini, OpenRouter, or a remote OpenAI-compatible host), text submitted to AI Summarize, Compose, Optimize, Smart Reply, or Translate is sent to that configured endpoint.
-- **End-User Disclosure:** When Remote AI mode is enabled, Sendmoro displays an in-app notice identifying the external AI host before users invoke AI features.
+- **Operator Responsibility:** Operators enabling a third-party AI API are responsible for disclosing external AI processing to their users and maintaining an appropriate DPA and legal basis under applicable law.
 
 ### 2.3 Public Holiday Calendar Feed (`holiday.sendmoro.com`) — *Optional / Configurable*
 - **Purpose:** Fetches public holiday dates (non-PII country/year JSON) when a user subscribes to a country holiday calendar.
