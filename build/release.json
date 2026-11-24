@@ -1,24 +1,24 @@
 {
   "version": "v1.0.0",
-  "build_number": 10301,
-  "released_at": "2026-11-24T05:12:24Z",
+  "build_number": 10302,
+  "released_at": "2026-11-24T16:17:06Z",
   "min_webmail_version": "v1.0.0",
-  "changelog": "https://github.com/SagorWeb/smoro/releases/tag/v1.0.0-10301",
+  "changelog": "https://github.com/SagorWeb/smoro/releases/tag/v1.0.0-10302",
   "mandatory": false,
   "clear_cache": false,
   "download": {
     "linux_amd64": {
-      "url": "https://github.com/SagorWeb/smoro/releases/download/v1.0.0-10301/sendmoro-linux-amd64.tar.gz",
-      "sha256": "8b5ab06b2d4d096327ff977c9af4c13430d72f965d213ba2283658ab735318aa",
-      "signature": "42728ecee16dd5a7fee9ef8dacd3dbdd7c74e4199c1c22d487f9b2e4b0fa946ac3451661c7ef9b2bf0a7c81e9d963e70416a6c549b4d4412ee44a2177e797706"
+      "url": "https://github.com/SagorWeb/smoro/releases/download/v1.0.0-10302/sendmoro-linux-amd64.tar.gz",
+      "sha256": "1bcbcf70eb81733b6b9182a6d88c90c39328c2c59c677e6d919e2e6bee12a32a",
+      "signature": "6e4b62d3770b9e073f307a36c2d6b5682bd7a98e8fe8bbd7d919e55c292cb483667120e9917c59beb908a75e435653e516fe0d4e6d2b2ca76ad4bc38077b6e02"
     },
     "installer_linux_amd64": {
-      "url": "https://github.com/SagorWeb/smoro/releases/download/v1.0.0-10301/sendmoro-installer-linux-amd64.tar.gz",
-      "sha256": "876d728dfe0e06390c767a4870175a74d6b6dff2268404ba728e68a93c5b80a4"
+      "url": "https://github.com/SagorWeb/smoro/releases/download/v1.0.0-10302/sendmoro-installer-linux-amd64.tar.gz",
+      "sha256": "eae58e21cd8bd236f105329ecc818d75d1ad287ca5606a8301990de743eab900"
     }
   },
   "sha256": {
-    "sendmoro-linux-amd64.tar.gz": "8b5ab06b2d4d096327ff977c9af4c13430d72f965d213ba2283658ab735318aa",
-    "sendmoro-installer-linux-amd64.tar.gz": "876d728dfe0e06390c767a4870175a74d6b6dff2268404ba728e68a93c5b80a4"
+    "sendmoro-linux-amd64.tar.gz": "1bcbcf70eb81733b6b9182a6d88c90c39328c2c59c677e6d919e2e6bee12a32a",
+    "sendmoro-installer-linux-amd64.tar.gz": "eae58e21cd8bd236f105329ecc818d75d1ad287ca5606a8301990de743eab900"
   }
 }
