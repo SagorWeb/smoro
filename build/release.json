@@ -1,24 +1,24 @@
 {
   "version": "v1.0.0",
-  "build_number": 10300,
-  "released_at": "2026-11-24T04:23:59Z",
+  "build_number": 10301,
+  "released_at": "2026-11-24T05:12:24Z",
   "min_webmail_version": "v1.0.0",
-  "changelog": "https://github.com/SagorWeb/smoro/releases/tag/v1.0.0-10300",
+  "changelog": "https://github.com/SagorWeb/smoro/releases/tag/v1.0.0-10301",
   "mandatory": false,
   "clear_cache": false,
   "download": {
     "linux_amd64": {
-      "url": "https://github.com/SagorWeb/smoro/releases/download/v1.0.0-10300/sendmoro-linux-amd64.tar.gz",
-      "sha256": "89d3aa161fe65915887b6b26edd939f56d9ed13752a463a7c92b40f4e36a2a63",
-      "signature": "0ad2e17da053938f75c5ce123978b1d72e198bec0c186bf18fbdfe9deed0f6353368ff61a1db91039e9be4bfcee5cc653d49591a38cfd4217b93b796cc641705"
+      "url": "https://github.com/SagorWeb/smoro/releases/download/v1.0.0-10301/sendmoro-linux-amd64.tar.gz",
+      "sha256": "8b5ab06b2d4d096327ff977c9af4c13430d72f965d213ba2283658ab735318aa",
+      "signature": "42728ecee16dd5a7fee9ef8dacd3dbdd7c74e4199c1c22d487f9b2e4b0fa946ac3451661c7ef9b2bf0a7c81e9d963e70416a6c549b4d4412ee44a2177e797706"
     },
     "installer_linux_amd64": {
-      "url": "https://github.com/SagorWeb/smoro/releases/download/v1.0.0-10300/sendmoro-installer-linux-amd64.tar.gz",
-      "sha256": "7f4c4b178e481f4391036a0d42f061caa2739d9d8e25ad24fda2caa495d10709"
+      "url": "https://github.com/SagorWeb/smoro/releases/download/v1.0.0-10301/sendmoro-installer-linux-amd64.tar.gz",
+      "sha256": "876d728dfe0e06390c767a4870175a74d6b6dff2268404ba728e68a93c5b80a4"
     }
   },
   "sha256": {
-    "sendmoro-linux-amd64.tar.gz": "89d3aa161fe65915887b6b26edd939f56d9ed13752a463a7c92b40f4e36a2a63",
-    "sendmoro-installer-linux-amd64.tar.gz": "7f4c4b178e481f4391036a0d42f061caa2739d9d8e25ad24fda2caa495d10709"
+    "sendmoro-linux-amd64.tar.gz": "8b5ab06b2d4d096327ff977c9af4c13430d72f965d213ba2283658ab735318aa",
+    "sendmoro-installer-linux-amd64.tar.gz": "876d728dfe0e06390c767a4870175a74d6b6dff2268404ba728e68a93c5b80a4"
   }
 }
