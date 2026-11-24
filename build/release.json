@@ -1,24 +1,24 @@
 {
   "version": "v1.0.0",
-  "build_number": 10297,
-  "released_at": "2026-11-24T00:59:56Z",
+  "build_number": 10298,
+  "released_at": "2026-11-24T01:05:30Z",
   "min_webmail_version": "v1.0.0",
-  "changelog": "https://github.com/SagorWeb/smoro/releases/tag/v1.0.0-10297",
+  "changelog": "https://github.com/SagorWeb/smoro/releases/tag/v1.0.0-10298",
   "mandatory": false,
   "clear_cache": true,
   "download": {
     "linux_amd64": {
-      "url": "https://github.com/SagorWeb/smoro/releases/download/v1.0.0-10297/sendmoro-linux-amd64.tar.gz",
-      "sha256": "829d300b51b3bd1e047c11d519f501f29059ddfdf4d00864012792559f0db6a3",
-      "signature": "d6ac4f6b6d4c5b28746b519d047594ad362d3fc59b0a1023d1b99a16f348a044bfda001c4f6767837d0b187cff5ff7d37634624360363dcf0ebd01e863b2090b"
+      "url": "https://github.com/SagorWeb/smoro/releases/download/v1.0.0-10298/sendmoro-linux-amd64.tar.gz",
+      "sha256": "af5b40b84fb88700b3b22b63902a1dbda51528389ea550f62df0952e1446fde8",
+      "signature": "cc4b64f0ea08f3ae5ef07871a0718344edaac70409480cf837207408cb4189729c95a7a314112f8c6bfcaba77c9c57becb6a6c7b7ba00d6d0244f4ea541d1503"
     },
     "installer_linux_amd64": {
-      "url": "https://github.com/SagorWeb/smoro/releases/download/v1.0.0-10297/sendmoro-installer-linux-amd64.tar.gz",
-      "sha256": "81e8c1c9695a516175b39e54630c1ef82f23ee7aaab45df0a8c477dba37cea04"
+      "url": "https://github.com/SagorWeb/smoro/releases/download/v1.0.0-10298/sendmoro-installer-linux-amd64.tar.gz",
+      "sha256": "d705d90865f6af2fa4c65c095360e6d12cb2a057d8efa4e9920c0972ec5f51ed"
     }
   },
   "sha256": {
-    "sendmoro-linux-amd64.tar.gz": "829d300b51b3bd1e047c11d519f501f29059ddfdf4d00864012792559f0db6a3",
-    "sendmoro-installer-linux-amd64.tar.gz": "81e8c1c9695a516175b39e54630c1ef82f23ee7aaab45df0a8c477dba37cea04"
+    "sendmoro-linux-amd64.tar.gz": "af5b40b84fb88700b3b22b63902a1dbda51528389ea550f62df0952e1446fde8",
+    "sendmoro-installer-linux-amd64.tar.gz": "d705d90865f6af2fa4c65c095360e6d12cb2a057d8efa4e9920c0972ec5f51ed"
   }
 }
