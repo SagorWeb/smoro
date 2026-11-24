@@ -1,24 +1,24 @@
 {
   "version": "v1.0.0",
-  "build_number": 10298,
-  "released_at": "2026-11-24T01:05:30Z",
+  "build_number": 10299,
+  "released_at": "2026-11-24T02:40:51Z",
   "min_webmail_version": "v1.0.0",
-  "changelog": "https://github.com/SagorWeb/smoro/releases/tag/v1.0.0-10298",
+  "changelog": "https://github.com/SagorWeb/smoro/releases/tag/v1.0.0-10299",
   "mandatory": false,
-  "clear_cache": true,
+  "clear_cache": false,
   "download": {
     "linux_amd64": {
-      "url": "https://github.com/SagorWeb/smoro/releases/download/v1.0.0-10298/sendmoro-linux-amd64.tar.gz",
-      "sha256": "af5b40b84fb88700b3b22b63902a1dbda51528389ea550f62df0952e1446fde8",
-      "signature": "cc4b64f0ea08f3ae5ef07871a0718344edaac70409480cf837207408cb4189729c95a7a314112f8c6bfcaba77c9c57becb6a6c7b7ba00d6d0244f4ea541d1503"
+      "url": "https://github.com/SagorWeb/smoro/releases/download/v1.0.0-10299/sendmoro-linux-amd64.tar.gz",
+      "sha256": "f95907b2e370ba71822d9a99c6dc0946a16cb8a5345cf69269300316feb3bd2d",
+      "signature": "7ac4c794d2038b32b589934bb730f16f47ac295bb5e4719883e5b4cecc6e6153345011c52cc3e7117e9777ff9dd8f15726aab223d11697bd79f3ae38d351d60a"
     },
     "installer_linux_amd64": {
-      "url": "https://github.com/SagorWeb/smoro/releases/download/v1.0.0-10298/sendmoro-installer-linux-amd64.tar.gz",
-      "sha256": "d705d90865f6af2fa4c65c095360e6d12cb2a057d8efa4e9920c0972ec5f51ed"
+      "url": "https://github.com/SagorWeb/smoro/releases/download/v1.0.0-10299/sendmoro-installer-linux-amd64.tar.gz",
+      "sha256": "6d1c44d4cc6af9eb23749a9ee5e3bf4bd70d14f7d03936f99fa3af97a08ac29a"
     }
   },
   "sha256": {
-    "sendmoro-linux-amd64.tar.gz": "af5b40b84fb88700b3b22b63902a1dbda51528389ea550f62df0952e1446fde8",
-    "sendmoro-installer-linux-amd64.tar.gz": "d705d90865f6af2fa4c65c095360e6d12cb2a057d8efa4e9920c0972ec5f51ed"
+    "sendmoro-linux-amd64.tar.gz": "f95907b2e370ba71822d9a99c6dc0946a16cb8a5345cf69269300316feb3bd2d",
+    "sendmoro-installer-linux-amd64.tar.gz": "6d1c44d4cc6af9eb23749a9ee5e3bf4bd70d14f7d03936f99fa3af97a08ac29a"
   }
 }
